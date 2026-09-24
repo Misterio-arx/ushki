@@ -1,0 +1,154 @@
+{% extends "ushki/base.html" %}
+{% load static %}
+
+{% block title %}Порог слышимости{% endblock %}
+
+{% block content %}
+<div class="card">
+<h2>Тест порога слышимости</h2>
+
+<!-- Экран 1: Инструкция -->
+<div id="step-intro">
+
+    <div class="warning">
+        <b>⚠️ Точность зависит от оборудования</b><br>
+        Этот тест измеряет <b>порог вашей системы</b> (наушники + звуковая карта),
+        а не только ваш слух.
+    </div>
+
+    <div class="info">
+        <b>🎧 Обычное оборудование</b><br>
+        Встроенная звуковая карта, наушники-вкладыши, Bluetooth — результат покажет
+        <b>ограничения техники</b>, а не вашего слуха. Если высокие частоты не слышны —
+        это, скорее всего, ограничение устройства.<br><br>
+
+        <b>🔬 Качественное оборудование</b><br>
+        Внешняя USB-звуковая карта + полноразмерные накладные наушники — результат
+        <b>приближается к реальному порогу слуха</b>. Именно так проводят тест в клиниках.<br><br>
+
+        Относитесь к цифрам как к <b>ориентиру</b>, а не диагнозу — если, конечно,
+        у вас не клиническое оборудование.
+    </div>
+
+    <p>Тест состоит из трёх шагов:</p>
+    <ol>
+        <li>Калибровка громкости.</li>
+        <li>Прослушивание тонов разной частоты.</li>
+        <li>Результат и сохранение.</li>
+    </ol>
+
+    <button onclick="startCalibration()">Начать</button>
+
+    <div class="info-block">
+    <div class="text">📖 <b>Интересно узнать о слухе?</b> Нажмите кнопку — узнаете,
+        как порог слышимости влияет на жизнь и что важно знать.</div>
+    <button onclick="showThresholdInfo()" class="secondary" style="font-size:13px;padding:8px 16px">
+        📖 О пороге слышимости
+    </button>
+    </div>
+
+</div>
+
+<!-- Экран 1.2: О пороге слышимости -->
+<div id="step-threshold-info" style="display:none">
+    <h3>О пороге слышимости</h3>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>👂 Что такое порог слышимости</b><br>
+        <b>Порог слышимости</b> — это минимальная громкость (или частота) звука,
+        которую способно уловить ваше ухо. Мы измеряем его в двух направлениях:
+        <br><br>
+        <b>Нижний порог</b> — самая низкая частота, которую вы слышите
+        (обычно 20–60 Гц у взрослого человека).<br>
+        <b>Верхний порог</b> — самая высокая частота (у молодого человека — до 16 000–20 000 Гц).
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🎧 Как это влияет на жизнь</b><br>
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li><b>Речь</b> — человеческий голос занимает 300–3000 Гц. Проблемы в этом диапазоне мешают общению.</li>
+            <li><b>Музыка</b> — высокие частоты дают «воздух» и «блеск», низкие — «телесность» и «мощь».</li>
+            <li><b>Безопасность</b> — сирены, сигналы, шум приближающейся машины — всё это вы должны слышать.</li>
+            <li><b>Общение</b> — плохой слух ведёт к изоляции и усталости в шумной обстановке.</li>
+        </ul>
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>📉 Интересные факты</b><br>
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li>Ухо человека слышит от <b>20 Гц до 20 000 Гц</b> — идеальный диапазон.</li>
+            <li>С возрастом верхний порог падает: к <b>40 годам</b> — обычно до 14 000 Гц, к <b>60</b> — до 10 000 Гц.</li>
+            <li><b>Слоны</b> слышат инфразвук до 16 Гц, а <b>летучие мыши</b> — ультразвук до 200 000 Гц.</li>
+            <li>Молодые люди часто слышат «<b>комариный писк</b>» на частоте 17 000 Гц — большинство взрослых уже нет.</li>
+            <li>Самая чувствительная зона уха — <b>2000–4000 Гц</b>. Именно здесь мы различаем речь лучше всего.</li>
+        </ul>
+    </div>
+
+    <div class="info">
+        <b>🩺 Зачем это измерять</b><br>
+        Порог слышимости — <b>базовый показатель здоровья слуха</b>. Изменения могут указывать на:
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li>Возрастные изменения (пресбиакузис).</li>
+            <li>Шумовое повреждение — после громких концертов, наушников на максимуме.</li>
+            <li>Заболевания уха (отит, серные пробки).</li>
+        </ul>
+        <b>Важно:</b> этот тест — <b>не медицинский диагноз</b>, а способ понять свои ощущения.
+        Если результат сильно отличается от нормы — обратитесь к врачу-сурдологу.
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;margin-top:16px">
+        В тесте мы воспроизведём тоны разной частоты и попросим вас отметить,
+        какие из них вы слышите. Это займёт около <b>3–4 минут</b>.
+    </p>
+
+    <div style="margin-top:20px">
+        <button onclick="startCalibrationFromInfo()">Понятно, начать тест</button>
+        <button onclick="closeThresholdInfo()" class="secondary">← Закрыть</button>
+    </div>
+</div>
+
+<!-- Экран 2: Калибровка -->
+<div id="step-calibration" style="display:none">
+    <h3>Шаг 1. Калибровка</h3>
+    <p>Сейчас заиграет <b>эталонный тон 1000 Гц</b>.</p>
+    <p>Отрегулируйте <b>системную громкость</b> так, чтобы тон был отчётливо слышен, но не громкий.</p>
+    <button onclick="playCalibrationTone()">▶ Воспроизвести тон</button>
+    <button onclick="stopTone()" class="secondary">■ Стоп</button>
+    <br><br>
+    <button id="btn-hear-cal" onclick="confirmCalibration()" disabled>✅ Я слышу этот звук</button>
+</div>
+
+<!-- Экран 3: Тест -->
+<div id="step-test" style="display:none">
+    <h3>Шаг 2. Тестирование</h3>
+    <p id="test-progress" class="progress-text"></p>
+    <div class="progress-bar">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+    <p>Сейчас прозвучит тон <b id="test-freq"></b> Гц в течение 3 секунд.</p>
+    <p>Нажмите кнопку, если вы его услышали. Если не услышали — тоже нажмите «Не слышу».</p>
+    <button id="btn-hear" onclick="answer(true)">✅ Слышу</button>
+    <button id="btn-not" onclick="answer(false)" class="secondary">❌ Не слышу</button>
+    <br><br>
+    <button onclick="skipRemaining()" class="secondary" style="font-size:13px;padding:8px 16px">
+        ⏭ Пропустить оставшиеся частоты
+    </button>
+</div>
+
+<!-- Экран 4: Результат -->
+<div id="step-result" style="display:none">
+    <h3>Шаг 3. Результат</h3>
+    <div id="result-content" class="result-box"></div>
+    <br>
+    <button onclick="downloadPDF('threshold')">📄 Скачать PDF</button>
+    <button onclick="openSendForm()" class="secondary">✉️ Отправить разработчику</button>
+    <button onclick="location.reload()" class="secondary">🔄 Пройти заново</button>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ushki/js/pdf.js' %}"></script>
+<script src="{% static 'ushki/js/email.js' %}?v=3"></script>
+<script src="{% static 'ushki/js/threshold.js' %}"></script>
+{% endblock %}

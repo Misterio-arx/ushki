@@ -1,0 +1,482 @@
+/* ============================================================
+   Ушки — единый стиль
+   ============================================================ */
+
+/* ---------- Светлая тема (по умолчанию) ---------- */
+:root {
+    --primary: #4a6cf7;
+    --primary-dark: #3a56d4;
+    --primary-light: #eef2ff;
+
+    --bg: #f4f6fb;
+    --bg-gradient: linear-gradient(135deg, #f4f6fb 0%, #e8ecf5 100%);
+    --card-bg: #ffffff;
+    --header-bg: #ffffff;
+
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+
+    --shadow: 0 4px 16px rgba(31, 41, 55, 0.08);
+    --shadow-hover: 0 8px 24px rgba(31, 41, 55, 0.12);
+
+    --radius: 14px;
+    --radius-sm: 8px;
+}
+
+/* ---------- Тёмная тема ---------- */
+html.dark {
+    --primary: #6b8aff;
+    --primary-dark: #4a6cf7;
+    --primary-light: #1e2a4a;
+
+    --bg: #0f172a;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1a1f35 100%);
+    --card-bg: #1e293b;
+    --header-bg: #16213e;
+
+    --text: #e5e7eb;
+    --text-muted: #94a3b8;
+    --border: #334155;
+
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Общие ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ---------- Шапка ---------- */
+header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    margin-bottom: 32px;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+header nav a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+}
+
+header nav a:hover {
+    background: var(--primary-light);
+}
+
+/* Кнопка темы */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s;
+    margin: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+/* ---------- Основной контент ---------- */
+main {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+main h2 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+main h3 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+main h4 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+main p {
+    color: var(--text);
+    margin: 12px 0;
+}
+
+/* ---------- Hero-баннер (только на главной) ---------- */
+.hero {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+    height: 220px;
+    background-image: url('../img/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow);
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--card-bg) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    right: 24px;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.hero-content p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* ---------- Карточки тестов ---------- */
+.test-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.test-card {
+    display: block;
+    padding: 20px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.test-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.test-card .title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.test-card .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ---------- Кнопки ---------- */
+button, .btn {
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+    margin: 4px 4px 4px 0;
+}
+
+button:hover:not(:disabled), .btn:hover {
+    background: var(--primary-dark);
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    background: #c7cdd6;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button.secondary, .btn.secondary {
+    background: var(--primary-light);
+    color: var(--text);
+}
+
+button.secondary:hover:not(:disabled) {
+    background: var(--border);
+}
+
+/* ---------- Блоки info и warning ---------- */
+.info {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.info b {
+    color: var(--primary-dark);
+}
+
+.warning {
+    background: #fff8e6;
+    border-left: 4px solid #f5a623;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    margin: 16px 0;
+    font-size: 14px;
+    color: #6b4e00;
+}
+
+html.dark .warning {
+    background: #3a2e14;
+    color: #fbbf24;
+}
+
+/* ---------- Таблицы ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+th, td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    color: var(--text);
+}
+
+th {
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* ---------- Прогресс ---------- */
+.progress {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* ---------- Индикатор стадии ---------- */
+.trial-indicator {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    color: var(--primary);
+    background: var(--primary-light);
+    border-radius: var(--radius-sm);
+    margin: 16px 0;
+}
+
+/* ---------- Палитра цветов ---------- */
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.color-swatch {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+    margin: 0;
+    padding: 0;
+}
+
+.color-swatch:hover {
+    transform: scale(1.06);
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Результат ---------- */
+.result-box {
+    padding: 16px;
+    background: var(--primary-light);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+}
+
+/* ---------- Подвал ---------- */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+}
+
+footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--primary);
+}
+
+/* ---------- Мобильная адаптация ---------- */
+@media (max-width: 600px) {
+    .card {
+        padding: 20px;
+    }
+
+    .hero {
+        height: 160px;
+    }
+
+    .hero-content h1 {
+        font-size: 22px;
+    }
+
+    main h2 {
+        font-size: 20px;
+    }
+
+    .color-palette {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    header nav a {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+
+/* ---------- Блок «О тесте» ---------- */
+.info-block {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: var(--primary-light);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
+}
+
+.info-block .text {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+/* ---------- Прогресс-бар ---------- */
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0 12px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 4px;
+}
+
+.progress-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 4px;
+}

@@ -1,0 +1,186 @@
+{% extends "ushki/base.html" %}
+{% load static %}
+
+{% block title %}Хроностезия{% endblock %}
+
+{% block content %}
+<div class="card">
+<h2>Хроностезия: оценка времени</h2>
+
+<!-- Экран 1: Инструкция -->
+<div id="step-intro">
+    <div class="info">
+        <b>⏱️ Что это за тест</b><br>
+        <b>Хроностезия</b> — это способность оценивать время без часов.
+        Мы проверим, насколько точно вы можете определить, <b>сколько секунд</b>
+        звучал звук.
+        <br><br>
+        Тест состоит из <b>двух режимов:</b>
+        <br><br>
+        <b>⏱ Оценить длительность</b> — вы услышите звук ветра.
+        Ваша задача — <b>как можно точнее определить длительность на слух</b>
+        и ввести число секунд. Перед началом — <b>2 тренировочных</b> звука
+        (не считаются), потом <b>8 основных</b>.
+        <br><br>
+        <b>🎯 Сравнить длительности</b> — вы услышите <b>два разных звука</b>
+        (ветер и море) разной длины. Нужно определить, <b>какой из них звучал
+        дольше</b>. Каждый звук можно прослушать <b>только один раз</b>.
+        Всего — <b>5 вопросов</b>.
+    </div>
+
+    <p><b>Как оценивается результат:</b></p>
+    <ul style="font-size:14px;color:#555;line-height:1.7">
+        <li><b>&lt; 15%</b> — отличное чувство времени.</li>
+        <li><b>15–30%</b> — норма.</li>
+        <li><b>30–50%</b> — ниже среднего.</li>
+        <li><b>&gt; 50%</b> — сильно искажённое восприятие.</li>
+    </ul>
+
+    <p><b>Выберите режим:</b></p>
+    <button onclick="startEstimateMode()">⏱ Оценить длительность</button>
+    <button onclick="startCompareMode()" class="secondary">🎯 Сравнить длительности</button>
+
+    <div class="info-block">
+    <div class="text">📖 <b>Интересно узнать о восприятии времени?</b> Нажмите кнопку.</div>
+    <button onclick="showChronoInfo()" class="secondary" style="font-size:13px;padding:8px 16px">
+        📖 О хроностезии
+    </button>
+    </div>
+</div>
+
+
+<!-- Экран 1.2: О хроностезии -->
+<div id="step-chrono-info" style="display:none">
+    <h3>О хроностезии</h3>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>⏱️ Что такое хроностезия</b><br>
+        <b>Хроностезия</b> (или «чувство времени») — способность оценивать
+        длительность событий без внешних ориентиров.
+        <br><br>
+        Это <b>не врождённое качество</b>, а навык. У музыкантов, спортсменов,
+        лётчиков и врачей оно развито лучше, потому что они работают с ритмом
+        и интервалами.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🧠 Как мозг считает время</b><br>
+        В мозге <b>нет отдельного «органа времени»</b>. Время оценивается
+        <b>комплексно</b> — через:
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li><b>Мозжечок</b> — отвечает за короткие интервалы (секунды).</li>
+            <li><b>Базальные ганглии</b> — за интервалы от нескольких секунд до минут.</li>
+            <li><b>Префронтальная кора</b> — за планирование и оценку времени.</li>
+        </ul>
+        Поэтому ощущение времени сильно зависит от <b>внимания</b>, <b>эмоций</b>
+        и <b>усталости</b>.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>📉 Интересные факты</b><br>
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li>Когда скучно — время <b>идёт медленнее</b>. Когда интересно — <b>быстрее</b>.</li>
+            <li>После 40 лет время субъективно <b>ускоряется</b> — мозг обрабатывает меньше новой информации.</li>
+            <li><b>Музыканты</b> оценивают интервалы с ошибкой <b>5–10%</b>, обычные люди — <b>20–30%</b>.</li>
+            <li>При <b>страхе</b> время замедляется — это защитный механизм.</li>
+            <li>Дети до 7 лет <b>не умеют</b> точно оценивать время — эта способность развивается позже.</li>
+        </ul>
+    </div>
+
+    <div class="info">
+        <b>🎯 Зачем это измерять</b><br>
+        Хроностезия связана с:
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li><b>Музыкальным слухом</b> — ритм и темп.</li>
+            <li><b>Реакцией</b> — водителям, спортсменам важно чувствовать время.</li>
+            <li><b>Концентрацией</b> — внимание сильно влияет на оценку.</li>
+        </ul>
+        Это <b>не диагноз</b>, а способ понять, как ваш мозг работает со временем.
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;margin-top:16px">
+        В режиме оценки — <b>2 тренировочных</b> звука и <b>8 основных</b>.
+        В режиме сравнения — <b>5 вопросов</b>. Это займёт около <b>5–7 минут</b>.
+    </p>
+
+    <div style="margin-top:20px">
+        <button onclick="startTestFromInfo()">Понятно, начать тест</button>
+        <button onclick="closeChronoInfo()" class="secondary">← Закрыть</button>
+    </div>
+</div>
+
+<!-- Экран 1.3: Режим сравнения -->
+<div id="step-compare" style="display:none">
+    <p id="compare-progress" class="progress-text"></p>
+    <div class="progress-bar">
+        <div id="compare-progress-fill" class="progress-bar-fill"></div>
+    </div>
+
+    <div class="trial-indicator" id="compare-stage">Нажмите «Первый звук» и «Второй звук»</div>
+
+    <div style="margin:20px 0">
+        <button id="btn-play-1" onclick="playCompareFirst()">▶ Первый звук (ветер)</button>
+        <button id="btn-play-2" onclick="playCompareSecond()" class="secondary">▶ Второй звук (море)</button>
+    </div>
+
+    <p style="font-size:13px;color:#b45309;margin:8px 0">
+        ⚠️ Каждый звук можно прослушать <b>только один раз</b>.
+    </p>
+
+    <p style="color:#6b7280;font-size:14px">
+        Какой звук звучал дольше?
+    </p>
+
+    <button id="btn-answer-1" onclick="answerCompare(1)">Первый длиннее</button>
+    <button id="btn-answer-2" onclick="answerCompare(2)" class="secondary">Второй длиннее</button>
+
+    <div id="compare-feedback" style="text-align:center;font-size:16px;font-weight:bold;min-height:24px;margin:12px 0"></div>
+</div>
+
+<!-- Экран 2: Тест -->
+<div id="step-test" style="display:none">
+    <p id="test-progress" class="progress-text"></p>
+    <div class="progress-bar">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+
+    <div class="trial-indicator" id="stage">Нажмите «Прослушать тон»</div>
+
+    <div style="margin:20px 0">
+        <button id="btn-play" onclick="playCurrentTone()">▶ Прослушать тон</button>
+    </div>
+
+    <div id="answer-area" style="display:none">
+        <p style="color:#6b7280;font-size:14px">
+            Сколько секунд играл тон? Введите целое число:
+        </p>
+        <input type="number" id="user-answer" min="1" max="60" placeholder="Например, 14"
+               style="padding:10px;font-size:16px;border:1px solid #ccc;border-radius:8px;width:120px">
+        <button onclick="submitAnswer()">Ответить</button>
+    </div>
+
+    <div id="feedback" style="text-align:center;font-size:16px;font-weight:bold;min-height:24px;margin:12px 0"></div>
+
+    <br><br>
+    <button onclick="skipRemaining()" class="secondary" style="font-size:13px;padding:8px 16px">
+        ⏭ Пропустить оставшиеся тона
+    </button>
+</div>
+
+<!-- Экран 3: Результат -->
+<div id="step-result" style="display:none">
+    <h3>Результат</h3>
+    <div id="result-content" class="result-box"></div>
+    <br>
+    <button onclick="downloadPDF('chronoesthesia')">📄 Скачать PDF</button>
+    <button onclick="openSendForm()" class="secondary">✉️ Отправить разработчику</button>
+    <button onclick="location.reload()" class="secondary">🔄 Пройти заново</button>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ushki/js/pdf.js' %}?v=3"></script>
+<script src="{% static 'ushki/js/email.js' %}?v=3"></script>
+<script src="{% static 'ushki/js/chronoesthesia.js' %}?v=1"></script>
+{% endblock %}

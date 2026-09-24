@@ -1,0 +1,41 @@
+{% extends "ushki/base.html" %}
+{% load static %}
+
+{% block title %}Ушки🎧 — тесты слуха{% endblock %}
+
+{% block content %}
+<div class="card">
+    <!-- Hero-баннер -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>🎧 Ушки</h1>
+        <p>Проверьте свой слух</p>
+        </div>
+    </div>
+
+    <!-- Карточки тестов -->
+    <h2 style="margin-top:24px">Выберите тест</h2>
+
+    <div class="test-list">
+        <a href="{% url 'ushki:threshold' %}" class="test-card">
+            <div class="title">🎚️ Порог слышимости</div>
+            <div class="desc">Какие частоты вы слышите, а какие — нет</div>
+        </a>
+
+        <a href="{% url 'ushki:association' %}" class="test-card">
+            <div class="title">🎨 Синопсия: цветной слух</div>
+            <div class="desc">Какой цвет вы видите, когда слышите звук</div>
+        </a>
+
+        <a href="{% url 'ushki:pitch' %}" class="test-card">
+            <div class="title">🎵 Различение высоты тона</div>
+            <div class="desc">Обычная и профессиональная версии для музыкантов</div>
+        </a>
+
+        <a href="{% url 'ushki:chronoesthesia' %}" class="test-card">
+            <div class="title">⏱️ Хроностезия</div>
+            <div class="desc">Насколько точно вы оцениваете время на слух</div>
+        </a>
+    </div>
+</div>
+{% endblock %}

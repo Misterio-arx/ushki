@@ -1,0 +1,168 @@
+{% extends "ushki/base.html" %}
+{% load static %}
+
+{% block title %}Различение высоты тона{% endblock %}
+
+{% block content %}
+<div class="card">
+<h2>Различение высоты тона</h2>
+
+<!-- Экран 1: Инструкция -->
+<div id="step-intro">
+    <div class="info">
+        <b>🎵 Что это за тест</b><br>
+        Вы услышите <b>два тона</b>. Один из них немного выше, другой — ниже.
+        Ваша задача — определить, <b>какой из двух тонов был выше</b>.
+        <br><br>
+        Сначала пройдите <b>тренировку</b>: послушайте низкий и высокий тоны,
+        чтобы понять разницу. Потом начнётся сам тест.
+        <br><br>
+        В тесте вы <b>сами решаете</b>, когда слушать первый тон, когда второй.
+        Слушайте столько раз, сколько нужно.
+    </div>
+
+    <p><b>Выберите режим:</b></p>
+
+    <button onclick="startTraining('normal')">Обычный режим</button>
+    <button onclick="startTraining('musician')" class="secondary">Профессиональный</button>
+
+    <p style="font-size:13px;color:#6b7280;margin-top:16px">
+        <b>Обычный режим</b> — для широкой аудитории. Использует мягкий тон
+        (triangle), начинается с разницы 100 Гц. Подходит большинству людей.
+        <br><br>
+        <b>Профессиональный режим</b> — для музыкантов и тех, кто хочет проверить
+        слух строже. Использует <b>чистый тон (sine)</b>, как в клинических тестах,
+        и начинается с разницы 30 Гц.
+    </p>
+
+    <div class="info-block">
+    <div class="text">📖 <b>Не читали, как работает тест?</b> Нажмите кнопку — узнаете,
+        что мы измеряем и почему этот метод считается научным.</div>
+    <button onclick="showMethod('normal')" class="secondary" style="font-size:13px;padding:8px 16px">
+        📖 О тесте и методе
+    </button>
+    </div>
+    <button onclick="showMethod('normal')" class="secondary" style="font-size:13px;padding:8px 16px">
+        📖 О тесте и методе
+    </button>
+    </div>
+</div>
+
+<!-- Экран 1.2: Как проходит тест -->
+<div id="step-method" style="display:none">
+    <h3>Как проходит тест</h3>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🎯 Что мы измеряем</b><br>
+        <b>Порог различения высоты тона</b> — это минимальная разница между двумя звуками,
+        которую вы способны заметить. Чем она меньше — тем тоньше ваш слух.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>⚙️ Как работает тест</b><br>
+        В каждой попытке играют два тона — один чуть выше, другой чуть ниже.
+        Вы решаете, какой был выше.
+        <br><br>
+        <b>Если вы отвечаете правильно два раза подряд</b> — разница между тонами уменьшается
+        (становится сложнее).<br>
+        <b>Если ошибаетесь</b> — разница увеличивается (становится легче).
+        <br><br>
+        Так тест находит <b>границу</b> вашего восприятия.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🔄 Что такое «перелом»</b><br>
+        Перелом — это момент, когда разница перестаёт уменьшаться и начинает расти
+        (или наоборот). Каждый перелом — это точка, где тест «нащупал» вашу границу.
+        <br><br>
+        Тест останавливается, когда накопится <b>10 переломов</b>. Результат —
+        <b>среднее по последним переломам</b>.
+    </div>
+
+    <div class="info">
+        <b>📖 Научный метод</b><br>
+        Этот тест использует метод <b>«2-down / 1-up»</b> — классический подход в психоакустике,
+        разработанный <b>Х. Левиттом</b> в 1971 году. Он применяется в слуховых исследованиях
+        по всему миру.
+        <br><br>
+        Такой алгоритм позволяет измерить порог на уровне <b>~70,7% правильных ответов</b>,
+        что <b>исключает угадывание</b> и даёт объективный результат.
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;margin-top:16px">
+        Тест адаптивный: с каждой попыткой он подстраивается под ваш слух.
+        Чем точнее вы отвечаете, тем сложнее становятся задания.
+    </p>
+
+    <div style="margin-top:20px">
+    <button onclick="startTrainingFromMethod()">Понятно, начать тренировку</button>
+    <button onclick="closeMethod()" class="secondary">← Закрыть</button>
+    </div>
+</div>
+
+<!-- Экран 1.3: Тренировка -->
+<div id="step-training" style="display:none">
+    <h3>Тренировка</h3>
+    <p>Прежде чем начать тест, послушайте, как звучат <b>низкий</b> и <b>высокий</b> тоны.</p>
+    <p style="font-size:14px;color:#6b7280">
+        Нажимайте кнопки по очереди, чтобы услышать разницу. Можно слушать сколько угодно раз.
+    </p>
+
+    <div style="margin:20px 0">
+        <button onclick="playLowTone()">▶ Низкий тон</button>
+        <button onclick="playHighTone()" class="secondary">▶ Высокий тон</button>
+    </div>
+
+    <div id="training-info" style="font-size:14px;color:#6b7280;margin:12px 0;min-height:20px"></div>
+
+    <button onclick="finishTraining()">Понятно, начать тест</button>
+</div>
+
+<!-- Экран 2: Тест -->
+<div id="step-test" style="display:none">
+    <p id="test-progress" class="progress-text"></p>
+    <div class="progress-bar">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+
+    <div class="trial-indicator" id="stage">Нажмите «Первый тон» и «Второй тон», чтобы услышать оба</div>
+
+    <div id="feedback" style="text-align:center;font-size:16px;font-weight:bold;min-height:24px;margin:12px 0"></div>
+
+    <div style="margin:20px 0">
+        <button id="btn-play-1" onclick="playFirst()">▶ Первый тон</button>
+        <button id="btn-play-2" onclick="playSecond()" class="secondary">▶ Второй тон</button>
+    </div>
+
+    <p style="color:#6b7280;font-size:14px">
+        Слушайте столько раз, сколько нужно. Когда решите — выберите ответ:
+    </p>
+
+    <button id="btn-a" onclick="answer(1)">Первый выше</button>
+    <button id="btn-b" onclick="answer(2)" class="secondary">Второй выше</button>
+
+    <br><br>
+    <button onclick="skipRemaining()" class="secondary" style="font-size:13px;padding:8px 16px">
+        ⏭ Пропустить оставшиеся попытки
+    </button>
+</div>
+
+<!-- Экран 3: Результат -->
+<div id="step-result" style="display:none">
+    <h3>Результат</h3>
+    <div id="result-content" class="result-box"></div>
+    <br>
+    <button onclick="downloadPDF('pitch')">📄 Скачать PDF</button>
+    <button onclick="openSendForm()" class="secondary">✉️ Отправить разработчику</button>
+    <button onclick="location.reload()" class="secondary">🔄 Пройти заново</button>
+</div>
+
+</div>              <!-- ← закрываем .card -->
+
+{% endblock %}      <!-- ← конец блока content -->
+
+{% block scripts %}
+<script src="{% static 'ushki/js/pdf.js' %}"></script>
+<script src="{% static 'ushki/js/email.js' %}?v=3"></script>
+<script src="{% static 'ushki/js/pitch.js' %}"></script>
+{% endblock %}

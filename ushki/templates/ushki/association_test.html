@@ -1,0 +1,143 @@
+{% extends "ushki/base.html" %}
+{% load static %}
+
+{% block title %}Синопсия: цветной слух{% endblock %}
+
+{% block content %}
+<div class="card">
+<h2>Синопсия: цветной слух</h2>
+
+<!-- Экран 1: Инструкция -->
+<div id="step-intro">
+    <div class="info">
+        <b>🎨 Что это за тест</b><br>
+        Синопсия (цветной слух) — это редкая особенность, при которой звуки вызывают
+        <b>непроизвольное ощущение цвета</b>. У большинства людей такой связи нет —
+        и это нормально.
+        <br><br>
+        Слушайте каждую ноту и выбирайте цвет, который <b>возникает у вас сам</b>,
+        без раздумий. Если цвета нет — выбирайте тот, что кажется наиболее близким.
+    </div>
+
+    <p>Тест состоит из 8 нот. На каждую — одна палитра.</p>
+    <button onclick="startTest()">Начать</button>
+
+    <div class="info-block">
+    <div class="text">📖 <b>Интересно узнать о синопсии?</b> Нажмите кнопку — узнаете,
+        как работает цветной слух и у кого он встречается.</div>
+    <button onclick="showSynopsiaInfo()" class="secondary" style="font-size:13px;padding:8px 16px">
+        📖 О синопсии
+    </button>
+    </div>
+
+</div>
+
+<!-- Экран 1.2: О синопсии -->
+<div id="step-synopsia-info" style="display:none">
+    <h3>О синопсии</h3>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🎨 Что такое синопсия</b><br>
+        <b>Синопсия</b> (или «цветной слух») — это редкая особенность восприятия,
+        при которой <b>звуки вызывают устойчивые ощущения цвета</b>.
+        <br><br>
+        Человек с синопсией буквально <b>«видит» звук</b>: нота «До» может быть красной,
+        «Ре» — оранжевой, и так далее. Эти ощущения <b>непроизвольны</b> — их нельзя
+        «включить» или «выключить» по желанию.
+        <br><br>
+        Это явление встречается примерно у <b>1 из 2000 человек</b>.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🧠 Как это работает в мозге</b><br>
+        Обычно зоны мозга, отвечающие за <b>слух</b> и <b>зрение</b>, работают раздельно.
+        У синестетов между ними есть <b>дополнительные нейронные связи</b> — поэтому
+        звук автоматически активирует и зрительные области.
+        <br><br>
+        Это <b>не болезнь</b> и <b>не отклонение</b> — просто другая организация мозга.
+        Синопсия часто передаётся по наследству.
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>🎼 Известные синестеты</b><br>
+        <ul style="margin:8px 0;padding-left:20px;line-height:1.7">
+            <li><b>Николай Римский-Корсаков</b> — русский композитор, видел цвета нот.</li>
+            <li><b>Александр Скрябин</b> — писал «цветомузыку», связывая тональности с цветами.</li>
+            <li><b>Оливье Мессиан</b> — французский композитор, создавал произведения на основе цветных ощущений.</li>
+            <li><b>Владимир Набоков</b> — писатель, описывал цветные буквы и звуки в своих произведениях.</li>
+        </ul>
+    </div>
+
+    <div class="info" style="margin-bottom:16px">
+        <b>📊 У кого бывает</b><br>
+        Синопсия <b>не связана с уровнем интеллекта</b> или музыкальным образованием.
+        Но её чаще замечают у людей <b>творческих профессий</b> — музыкантов, художников,
+        писателей.
+        <br><br>
+        Даже у людей <b>без синопсии</b> есть слабые ассоциации: высокие звуки чаще
+        связывают со светлыми цветами, низкие — с тёмными. Этот тест поможет понять,
+        насколько сильна ваша связь звука и цвета.
+    </div>
+
+    <div class="info">
+        <b>💡 Важно понимать</b><br>
+        Если у вас <b>нет синопсии</b> — это <b>норма</b>, у большинства людей её нет.
+        Выбирайте цвета, которые «кажутся подходящими» — это тоже даст интересный
+        результат.
+        <br><br>
+        Если <b>есть синопсия</b> — цвета для одних и тех же нот будут стабильны.
+        Попробуйте пройти тест <b>через неделю</b> и сравнить.
+    </div>
+
+    <p style="font-size:13px;color:#6b7280;margin-top:16px">
+        В тесте вы прослушаете 8 нот и выберете цвет для каждой. Это займёт около
+        <b>2–3 минут</b>.
+    </p>
+
+    <div style="margin-top:20px">
+        <button onclick="startTestFromInfo()">Понятно, начать тест</button>
+        <button onclick="closeSynopsiaInfo()" class="secondary">← Закрыть</button>
+    </div>
+</div>
+
+<!-- Экран 2: Тест -->
+<div id="step-test" style="display:none">
+    <p id="test-progress" class="progress-text"></p>
+    <div class="progress-bar">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+    <h3 id="note-name"></h3>
+
+    <div style="margin:20px 0">
+        <button id="btn-play-note" onclick="playCurrentNote()">▶ Прослушать ноту</button>
+    </div>
+
+    <p style="color:#6b7280;font-size:14px">
+        Выберите цвет, который вы «видите» или ощущаете при этой ноте:
+    </p>
+
+    <div id="color-palette" class="color-palette"></div>
+
+    <br>
+    <button onclick="skipRemaining()" class="secondary" style="font-size:13px;padding:8px 16px">
+        ⏭ Пропустить оставшиеся ноты
+    </button>
+</div>
+
+<!-- Экран 3: Результат -->
+<div id="step-result" style="display:none">
+    <h3>Результат</h3>
+    <div id="result-content" class="result-box"></div>
+    <br>
+    <button onclick="downloadPDF('synopsia')">📄 Скачать PDF</button>
+    <button onclick="openSendForm()" class="secondary">✉️ Отправить разработчику</button>
+    <button onclick="location.reload()" class="secondary">🔄 Пройти заново</button>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'ushki/js/pdf.js' %}"></script>
+<script src="{% static 'ushki/js/email.js' %}?v=3"></script>
+<script src="{% static 'ushki/js/association.js' %}"></script>
+{% endblock %}

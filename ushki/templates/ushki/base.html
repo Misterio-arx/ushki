@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ушки🎧 — тесты слуха{% endblock %}</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'ushki/img/favicon/favicon.ico' %}">
+
+    <!-- Тема (загружаем ДО CSS, чтобы не было мигания) -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('ushki_theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="{% static 'ushki/css/style.css' %}?v=2">
+
+    <!-- jsPDF + html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Модуль сохранения прогресса -->
+    <script src="{% static 'ushki/js/storage.js' %}?v=1"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="{% url 'ushki:home' %}" class="logo">🎧 Ушки</a>
+            <nav>
+                <a href="{% url 'ushki:home' %}">Главная</a>
+                <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Ушки🎧. Все права защищены.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:6px">
+                <a href="{% url 'ushki:privacy' %}">Политика конфиденциальности</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Переключение темы -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('ushki_theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const icon = document.querySelector('.theme-icon');
+            if (!icon) return;
+            icon.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        }
+
+        // Обновляем иконку при загрузке
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
