@@ -72,7 +72,7 @@ function playTone(freq, duration, volume) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = 'triangle';
+    osc.type = 'sine';
     osc.frequency.value = freq;
 
     // Плавная атака/затухание, чтобы не было щелчков

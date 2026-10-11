@@ -94,7 +94,7 @@ function closeChronoInfo() {
 
 function startTestFromInfo() {
     document.getElementById('step-chrono-info').style.display = 'none';
-    startTest();
+    document.getElementById('step-intro').style.display = 'block';
 }
 
 // ---------- Старт теста ----------
