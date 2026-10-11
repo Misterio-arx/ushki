@@ -2,8 +2,6 @@
 
 Веб-приложение для проверки слуха — четыре интерактивных теста.
 
-**🌐 Живая версия:** в разработке (скоро)
-
 ## 🎯 Тесты
 
 | Тест | Что проверяет | Время |
@@ -27,13 +25,12 @@
 ## 🛠 Технологии
 
 - **Backend:** Django 6.1, SQLite
-- **Frontend:** HTML, CSS, JavaScript (без фреймворков)
-- **Аудио:** Web Audio API (sine/triangle), MP3
+- **Frontend:** HTML, CSS, JavaScript
+- **Аудио:** Web Audio API, MP3
 - **PDF:** jsPDF + html2canvas
 - **Email:** EmailJS
-- **Графика:** CSS-переменные, SVG-иконки
 
-## 🚀 Как запустить
+## 🚀 Как запустить локально
 
 ### Требования
 
@@ -47,3 +44,116 @@
 ```bash
 git clone https://github.com/Misterio-arx/ushki.git
 cd ushki
+```
+
+**2. Создайте виртуальное окружение:**
+
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**3. Установите зависимости:**
+
+Если есть `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+Если файла нет:
+```bash
+pip install django
+```
+
+**4. Примените миграции:**
+
+```bash
+python manage.py migrate
+```
+
+**5. Создайте администратора (опционально):**
+
+```bash
+python manage.py createsuperuser
+```
+
+**6. Запустите сервер:**
+
+```bash
+python manage.py runserver
+```
+
+**7. Откройте в браузере:**
+
+```
+http://127.0.0.1:8000/
+```
+
+### Доступ с телефона (в той же Wi-Fi)
+
+**1. Узнайте IP компьютера:**
+
+```bash
+# Windows
+ipconfig
+
+# macOS / Linux
+ifconfig
+```
+
+Найдите **IPv4-адрес** — например, `192.168.0.105`.
+
+**2. В `config/settings.py` разрешите хост:**
+
+```python
+ALLOWED_HOSTS = ['*']
+```
+
+**3. Запустите сервер:**
+
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+**4. Откройте на телефоне:**
+
+```
+http://192.168.0.105:8000
+```
+
+### Возможные проблемы
+
+| Проблема | Решение |
+|---|---|
+| **`python не найден`** | Установите Python 3.10+ и добавьте в PATH |
+| **`django не найден`** | Активируйте `.venv` и запустите `pip install django` |
+| **Порт 8000 занят** | Запустите на другом порту: `python manage.py runserver 8001` |
+| **Сайт не открывается на телефоне** | Проверьте, что телефон и ПК в одной Wi-Fi, и `runserver 0.0.0.0:8000` |
+| **Звук не работает** | Разрешите автовоспроизведение в браузере, наденьте наушники |
+
+## 📁 Структура проекта
+
+```
+ushki/
+├── config/              # Настройки Django
+├── ushki/               # Приложение
+│   ├── static/ushki/    # CSS, JS, audio, img
+│   ├── templates/ushki/ # HTML-шаблоны
+│   ├── models.py        # Модель TestResult
+│   └── views.py         # Представления
+├── db.sqlite3           # База данных (создаётся при migrate)
+└── manage.py
+```
+
+## 👤 Автор
+
+**Misterio-arx** © 2026
+
+## 📄 Лицензия
+
+MIT — см. [LICENSE](LICENSE)
