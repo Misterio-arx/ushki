@@ -25,10 +25,11 @@
 ## 🛠 Технологии
 
 - **Backend:** Django 6.1, SQLite
-- **Frontend:** HTML, CSS, JavaScript
+- **Frontend:** HTML, CSS, JavaScript (без фреймворков)
 - **Аудио:** Web Audio API, MP3
 - **PDF:** jsPDF + html2canvas
 - **Email:** EmailJS
+- **Графика:** CSS-переменные, SVG-иконки
 
 ## 🚀 Как запустить локально
 
@@ -60,12 +61,6 @@ source .venv/bin/activate
 
 **3. Установите зависимости:**
 
-Если есть `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
-
-Если файла нет:
 ```bash
 pip install django
 ```
@@ -76,19 +71,13 @@ pip install django
 python manage.py migrate
 ```
 
-**5. Создайте администратора (опционально):**
-
-```bash
-python manage.py createsuperuser
-```
-
-**6. Запустите сервер:**
+**5. Запустите сервер:**
 
 ```bash
 python manage.py runserver
 ```
 
-**7. Откройте в браузере:**
+**6. Откройте в браузере:**
 
 ```
 http://127.0.0.1:8000/
