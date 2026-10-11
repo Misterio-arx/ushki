@@ -19,8 +19,9 @@ function generateFreqs() {
     // 9000–16000 Гц: 6 точек
     [9000, 11000, 13000, 15000, 15500, 16000].forEach(f => list.push(f));
 
-    // 16250–18500 Гц: шаг 250 Гц + до 18500
-    for (let f = 16250; f <= 18500; f += 250) list.push(f);
+    // 16250–20000 Гц: шаг 250 Гц + до 20000
+    for (let f = 16250; f <= 19750; f += 250) list.push(f);
+    list.push(20000);
 
     return list;
 }
@@ -194,7 +195,7 @@ function finishTest(stoppedAt = null) {
     const low    = countInRange(18, 100);      // низкие
     const mid    = countInRange(125, 2000);    // средние
     const high   = countInRange(4000, 8000);   // высокие
-    const veryHi = countInRange(9000, 18500);  // очень высокие
+    const veryHi = countInRange(9000, 20000);  // очень высокие
 
     // ---------- HTML для страницы ----------
     let htmlPage = '';
@@ -238,7 +239,7 @@ function finishTest(stoppedAt = null) {
     htmlPage += `<tr><td><b>Низкие</b><br>18–100 Гц</td><td>Бас, гул, удары</td><td>${low.heard} / ${low.total}</td></tr>`;
     htmlPage += `<tr><td><b>Средние</b><br>125–2000 Гц</td><td>Речь, музыка</td><td>${mid.heard} / ${mid.total}</td></tr>`;
     htmlPage += `<tr><td><b>Высокие</b><br>4000–8000 Гц</td><td>Свист, шипение</td><td>${high.heard} / ${high.total}</td></tr>`;
-    htmlPage += `<tr><td><b>Очень высокие</b><br>9000–18500 Гц</td><td>Ультразвук</td><td>${veryHi.heard} / ${veryHi.total}</td></tr>`;
+    htmlPage += `<tr><td><b>Очень высокие</b><br>9000–20000 Гц</td><td>Ультразвук</td><td>${veryHi.heard} / ${veryHi.total}</td></tr>`;
     htmlPage += '</table>';
 
     // 4. Таблица норм по возрасту
@@ -262,6 +263,7 @@ function finishTest(stoppedAt = null) {
     htmlPage += '<li>😴 <b>Усталость</b> — после долгого дня слух притупляется.</li>';
     htmlPage += '<li>🎵 <b>Музыкальный опыт</b> — музыканты часто слышат больше.</li>';
     htmlPage += '<li>🏥 <b>Здоровье</b> — простуда, отит, серные пробки временно снижают слух.</li>';
+    htmlPage += '<li>📻 <b>Частоты 19–20 кГц</b> — слышат очень немногие; большинство наушников и MP3 их не воспроизводят.</li>';
     htmlPage += '</ul>';
 
     // ---------- HTML для письма ----------
@@ -278,7 +280,7 @@ function finishTest(stoppedAt = null) {
     htmlEmail += `<p>Низкие (18–100 Гц): ${low.heard} / ${low.total}</p>`;
     htmlEmail += `<p>Средние (125–2000 Гц): ${mid.heard} / ${mid.total}</p>`;
     htmlEmail += `<p>Высокие (4000–8000 Гц): ${high.heard} / ${high.total}</p>`;
-    htmlEmail += `<p>Очень высокие (9000–18500 Гц): ${veryHi.heard} / ${veryHi.total}</p>`;
+    htmlEmail += `<p>Очень высокие (9000–20000 Гц): ${veryHi.heard} / ${veryHi.total}</p>`;
 
     // ---------- Показываем и отправляем ----------
     document.getElementById('result-content').innerHTML = htmlPage;
